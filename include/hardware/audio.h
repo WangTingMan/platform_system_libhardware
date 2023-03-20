@@ -19,8 +19,10 @@
 #define ANDROID_AUDIO_HAL_INTERFACE_H
 
 #include <stdint.h>
+#if __has_include( <strings.h> )
 #include <strings.h>
-#include <sys/cdefs.h>
+#endif
+
 #include <sys/types.h>
 #include <time.h>
 
@@ -29,6 +31,26 @@
 #include <hardware/hardware.h>
 #include <system/audio.h>
 #include <hardware/audio_effect.h>
+
+#ifdef __cplusplus
+#ifndef __BEGIN_DECLS
+#define __BEGIN_DECLS extern "C" {
+#endif
+#else
+#define __BEGIN_DECLS
+#endif
+
+#ifdef __cplusplus
+#ifndef __END_DECLS
+#define __END_DECLS }
+#endif
+#else
+#define __END_DECLS
+#endif
+
+#ifndef ssize_t
+#define ssize_t int64_t
+#endif
 
 __BEGIN_DECLS
 
@@ -778,7 +800,7 @@ typedef struct audio_stream_in audio_stream_in_t;
  *
  * Deprecated: use audio_stream_out_frame_size() or audio_stream_in_frame_size() instead.
  */
-__attribute__((__deprecated__))
+/*__attribute__((__deprecated__))*/
 static inline size_t audio_stream_frame_size(const struct audio_stream *s)
 {
     size_t chan_samp_sz;

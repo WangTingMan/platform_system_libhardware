@@ -18,10 +18,24 @@
 #define ANDROID_INCLUDE_HARDWARE_HARDWARE_H
 
 #include <stdint.h>
-#include <sys/cdefs.h>
 
 #include <cutils/native_handle.h>
-#include <system/graphics.h>
+
+#ifdef __cplusplus
+#ifndef __BEGIN_DECLS
+#define __BEGIN_DECLS extern "C" {
+#endif
+#else
+#define __BEGIN_DECLS
+#endif
+
+#ifdef __cplusplus
+#ifndef __END_DECLS
+#define __END_DECLS }
+#endif
+#else
+#define __END_DECLS
+#endif
 
 __BEGIN_DECLS
 
