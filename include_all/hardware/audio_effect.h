@@ -20,8 +20,10 @@
 
 #include <errno.h>
 #include <stdint.h>
+#ifndef _MSC_VER
 #include <strings.h>
 #include <sys/cdefs.h>
+#endif
 #include <sys/types.h>
 
 #include <cutils/bitops.h>

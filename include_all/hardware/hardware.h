@@ -18,11 +18,13 @@
 #define ANDROID_INCLUDE_HARDWARE_HARDWARE_H
 
 #include <stdint.h>
+#ifndef _MSC_VER
 #include <sys/cdefs.h>
-
+#endif
 #include <cutils/native_handle.h>
+#ifndef _MSC_VER
 #include <system/graphics.h>
-
+#endif
 __BEGIN_DECLS
 
 /*

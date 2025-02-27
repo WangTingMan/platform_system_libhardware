@@ -19,8 +19,10 @@
 #define ANDROID_AUDIO_HAL_INTERFACE_H
 
 #include <stdint.h>
+#ifndef _MSC_VER
 #include <strings.h>
 #include <sys/cdefs.h>
+#endif
 #include <sys/types.h>
 #include <time.h>
 
@@ -778,7 +780,7 @@ typedef struct audio_stream_in audio_stream_in_t;
  *
  * Deprecated: use audio_stream_out_frame_size() or audio_stream_in_frame_size() instead.
  */
-__attribute__((__deprecated__))
+/*__attribute__((__deprecated__))*/
 static inline size_t audio_stream_frame_size(const struct audio_stream *s)
 {
     size_t chan_samp_sz;
