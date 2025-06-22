@@ -18,14 +18,25 @@
 
 #include <cutils/properties.h>
 
+#ifndef _MSC_VER
 #include <dlfcn.h>
+#endif
 #include <string.h>
+#ifndef _MSC_VER
 #include <pthread.h>
+#endif
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
+
+#include <cutils/native_handle.h>
+#include <utils/direct.h>
+#include <corecrt_io.h>
+#define R_OK 0
 
 #define LOG_TAG "HAL"
 #include <log/log.h>
@@ -48,6 +59,10 @@
 #define HAL_LIBRARY_PATH1 "/system/" HAL_LIBRARY_SUBDIR
 #define HAL_LIBRARY_PATH2 "/vendor/" HAL_LIBRARY_SUBDIR
 #define HAL_LIBRARY_PATH3 "/odm/" HAL_LIBRARY_SUBDIR
+
+#ifdef _MSC_VER
+#define __attribute__(...)
+#endif
 
 /**
  * There are a set of variant filename for modules. The form of the filename
@@ -88,6 +103,7 @@ static int load(const char *id,
 #else
     const bool try_system = true;
 #endif
+    const char* sym = HAL_MODULE_INFO_SYM_AS_STR;
 
     /*
      * load the symbols resolving undefined symbols before
@@ -115,7 +131,6 @@ static int load(const char *id,
     }
 
     /* Get the address of the struct hal_module_info. */
-    const char *sym = HAL_MODULE_INFO_SYM_AS_STR;
     hmi = (struct hw_module_t *)dlsym(handle, sym);
     if (hmi == NULL) {
         ALOGE("load: couldn't find symbol %s", sym);
@@ -155,12 +170,20 @@ static int load(const char *id,
 /*
  * If path is in in_path.
  */
-static bool __attribute__ ((unused)) path_in_path(const char *path, const char *in_path) {
+static bool __attribute__((unused)) path_in_path(const char *path, const char *in_path) {
     char real_path[PATH_MAX];
+#ifdef _MSC_VER
+    strcpy_s(real_path, path);
+#else
     if (realpath(path, real_path) == NULL) return false;
+#endif
 
     char real_in_path[PATH_MAX];
+#ifdef _MSC_VER
+    strcpy_s(real_in_path, in_path);
+#else
     if (realpath(in_path, real_in_path) == NULL) return false;
+#endif
 
     const size_t real_in_path_len = strlen(real_in_path);
     if (strncmp(real_path, real_in_path, real_in_path_len) != 0) {

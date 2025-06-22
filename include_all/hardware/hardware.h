@@ -25,6 +25,9 @@
 #ifndef _MSC_VER
 #include <system/graphics.h>
 #endif
+
+#include "libhardware_exports.h"
+
 __BEGIN_DECLS
 
 /*
@@ -224,7 +227,7 @@ typedef struct hw_device_t {
  *
  * @return: 0 == success, <0 == error and *module == NULL
  */
-int hw_get_module(const char *id, const struct hw_module_t **module);
+LIBHARDWARE_API int hw_get_module(const char *id, const struct hw_module_t **module);
 
 /**
  * Get the module info associated with a module instance by class 'class_id'
@@ -238,7 +241,7 @@ int hw_get_module(const char *id, const struct hw_module_t **module);
  *
  * @return: 0 == success, <0 == error and *module == NULL
  */
-int hw_get_module_by_class(const char *class_id, const char *inst,
+LIBHARDWARE_API int hw_get_module_by_class(const char *class_id, const char *inst,
                            const struct hw_module_t **module);
 
 __END_DECLS
