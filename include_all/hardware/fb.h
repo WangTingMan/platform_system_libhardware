@@ -19,7 +19,11 @@
 #define ANDROID_FB_INTERFACE_H
 
 #include <stdint.h>
+#ifdef _MSC_VER
+#include <cutils/bitops.h>
+#else
 #include <sys/cdefs.h>
+#endif
 #include <sys/types.h>
 
 #include <cutils/native_handle.h>

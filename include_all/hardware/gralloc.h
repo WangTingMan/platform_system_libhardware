@@ -22,7 +22,11 @@
 #include <hardware/hardware.h>
 
 #include <stdint.h>
+#ifdef _MSC_VER
+#include <cutils/bitops.h>
+#else
 #include <sys/cdefs.h>
+#endif
 #include <sys/types.h>
 
 #include <cutils/native_handle.h>
